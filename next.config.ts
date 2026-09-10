@@ -6,6 +6,7 @@ const onPages = process.env.GITHUB_PAGES === "true";
 
 const nextConfig: NextConfig = {
   output: "export",
+  trailingSlash: true,
   basePath: onPages ? "/surgiemd-landing" : undefined,
   images: { unoptimized: true },
 };

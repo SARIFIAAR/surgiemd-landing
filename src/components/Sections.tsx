@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useCallback } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 /* ---------------------------------- shared ---------------------------------- */
@@ -50,6 +51,7 @@ export function Nav() {
           <a className="nav-link hover:text-paper transition-colors" href="#showcase">Outcomes</a>
           <a className="nav-link hover:text-paper transition-colors" href="#security">Security</a>
           <a className="nav-link hover:text-paper transition-colors" href="#pricing">Pricing</a>
+          <Link className="nav-link text-cyan/80 hover:text-cyan transition-colors" href="/orbit/">Concept B</Link>
         </nav>
         <a
           href="#cta"
