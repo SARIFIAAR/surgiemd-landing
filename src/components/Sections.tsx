@@ -35,6 +35,41 @@ function AppStoreBadge({ large = false }: { large?: boolean }) {
   );
 }
 
+/* decorative backdrop: drifting aurora blobs + faint dot grid */
+function Backdrop({ dots = false }: { dots?: boolean }) {
+  return (
+    <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden>
+      {dots && <div className="dot-grid absolute inset-0" />}
+      <div className="aurora aurora-teal -left-32 -top-24 h-[34rem] w-[34rem]" />
+      <div className="aurora aurora-mint -right-40 top-1/4 h-[38rem] w-[38rem]" />
+      <div className="aurora aurora-sky -bottom-40 left-1/4 h-[30rem] w-[30rem]" />
+    </div>
+  );
+}
+
+/* huge, barely-there eyelid line-art used behind feature rows */
+function EyelidMotif({ flip = false }: { flip?: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 400 240"
+      aria-hidden
+      className={`pointer-events-none absolute top-1/2 -z-10 hidden w-[42rem] -translate-y-1/2 text-teal opacity-[0.05] lg:block ${
+        flip ? "-left-56 -scale-x-100" : "-right-56"
+      }`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+    >
+      <path d="M60 124 C 120 60, 280 60, 340 124" />
+      <path d="M60 124 C 120 168, 280 168, 340 124" />
+      <circle cx="200" cy="120" r="28" />
+      <circle cx="200" cy="120" r="12" />
+      <path d="M56 76 C 120 28, 280 28, 348 80" />
+    </svg>
+  );
+}
+
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
     <span className="inline-block rounded-full bg-mint px-3.5 py-1.5 text-xs font-semibold tracking-wide text-teal-deep">
@@ -259,6 +294,7 @@ export function Nav() {
 export function Hero() {
   return (
     <section className="relative overflow-hidden pt-36 pb-24">
+      <Backdrop dots />
       <div className="mx-auto grid max-w-6xl items-center gap-16 px-6 md:grid-cols-2">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -268,7 +304,7 @@ export function Hero() {
           <Eyebrow>For oculoplastic &amp; aesthetic surgeons</Eyebrow>
           <h1 className="font-display mt-5 text-5xl font-bold leading-[1.06] tracking-tight md:text-6xl">
             Patient photos,{" "}
-            <span className="text-teal">perfectly consistent.</span>
+            <span className="gradient-text">perfectly consistent.</span>
           </h1>
           <p className="mt-6 max-w-md text-lg leading-relaxed text-slate">
             SurgiMD guides every capture with silhouette overlays and angle
@@ -297,6 +333,23 @@ export function Hero() {
           <PhoneFrame>
             <ScreenCapture />
           </PhoneFrame>
+          {/* floating clinical chips */}
+          <div className="float-slow card-shadow absolute -left-24 top-16 hidden rounded-xl border border-line bg-paper/90 px-3.5 py-2.5 backdrop-blur sm:block">
+            <span className="font-mono text-[10px] font-semibold tracking-wide text-teal">
+              YAW 0.1° · LOCKED
+            </span>
+          </div>
+          <div className="float-slower card-shadow absolute -right-20 top-1/3 hidden items-center gap-2 rounded-xl border border-line bg-paper/90 px-3.5 py-2.5 backdrop-blur sm:flex">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-mint text-[10px] text-teal">
+              ✓
+            </span>
+            <span className="text-[11px] font-semibold text-ink">Visit 4 aligned</span>
+          </div>
+          <div className="float-slow card-shadow absolute -left-16 bottom-24 hidden rounded-xl border border-line bg-paper/90 px-3.5 py-2.5 backdrop-blur sm:block" style={{ animationDelay: "1.6s" }}>
+            <span className="font-mono text-[10px] font-semibold tracking-wide text-slate">
+              MRD <span className="text-teal">+2.4 mm</span>
+            </span>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -343,7 +396,8 @@ function FeatureRow({
   flip?: boolean;
 }) {
   return (
-    <section id={id} className="py-24">
+    <section id={id} className="relative overflow-hidden py-24">
+      <EyelidMotif flip={flip} />
       <div
         className={`mx-auto grid max-w-6xl items-center gap-16 px-6 md:grid-cols-2 ${
           flip ? "md:[&>*:first-child]:order-2" : ""
@@ -452,9 +506,110 @@ const SECURITY_CARDS = [
   },
 ];
 
+/* self-drawn compliance badges — HIPAA/GDPR have no official logos,
+   so these are neutral marks in the style compliance pages use */
+function EUStars({ r = 17 }: { r?: number }) {
+  return (
+    <>
+      {Array.from({ length: 12 }, (_, i) => {
+        const a = (i / 12) * Math.PI * 2 - Math.PI / 2;
+        return (
+          <text
+            key={i}
+            x={32 + Math.cos(a) * r}
+            y={30 + Math.sin(a) * r}
+            textAnchor="middle"
+            dominantBaseline="central"
+            fontSize="6.5"
+            fill="#ffcc00"
+          >
+            ★
+          </text>
+        );
+      })}
+    </>
+  );
+}
+
+const BADGES: Array<{ label: string; sub: string; art: React.ReactNode }> = [
+  {
+    label: "GDPR",
+    sub: "European Union",
+    art: (
+      <svg viewBox="0 0 64 64" className="h-14 w-14">
+        <circle cx="32" cy="32" r="30" fill="#003399" />
+        <EUStars />
+        <text x="32" y="45" textAnchor="middle" fontSize="11" fontWeight="800" fill="#ffffff" fontFamily="var(--font-inter-tight), sans-serif">
+          GDPR
+        </text>
+      </svg>
+    ),
+  },
+  {
+    label: "HIPAA",
+    sub: "United States",
+    art: (
+      <svg viewBox="0 0 64 64" className="h-14 w-14">
+        <path d="M32 3l24 8v20c0 15-10 26-24 30C18 57 8 46 8 31V11l24-8z" fill="#0e7c7b" />
+        <path d="M22 32l7 7 13-13" stroke="#ffffff" strokeWidth="5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <text x="32" y="56" textAnchor="middle" fontSize="9" fontWeight="800" fill="#ffffff" fontFamily="var(--font-inter-tight), sans-serif">
+          HIPAA
+        </text>
+      </svg>
+    ),
+  },
+  {
+    label: "LGPD",
+    sub: "Brazil",
+    art: (
+      <svg viewBox="0 0 64 64" className="h-14 w-14">
+        <circle cx="32" cy="32" r="30" fill="#009b3a" />
+        <path d="M32 10L56 32L32 54L8 32Z" fill="#fedf00" />
+        <circle cx="32" cy="32" r="11" fill="#002776" />
+        <text x="32" y="58" textAnchor="middle" fontSize="9" fontWeight="800" fill="#ffffff" fontFamily="var(--font-inter-tight), sans-serif">
+          LGPD
+        </text>
+      </svg>
+    ),
+  },
+  {
+    label: "DHA",
+    sub: "Dubai · UAE",
+    art: (
+      <svg viewBox="0 0 64 64" className="h-14 w-14">
+        <circle cx="32" cy="32" r="30" fill="#0b1c2b" />
+        <path d="M32 12a20 20 0 100 40 16 16 0 110-40z" fill="#d4af37" />
+        <text x="38" y="36" textAnchor="middle" fontSize="10" fontWeight="800" fill="#ffffff" fontFamily="var(--font-inter-tight), sans-serif">
+          DHA
+        </text>
+      </svg>
+    ),
+  },
+];
+
+function ComplianceBadges() {
+  return (
+    <div className="mt-12 flex flex-wrap items-start justify-center gap-x-12 gap-y-6">
+      {BADGES.map((b, i) => (
+        <motion.div
+          key={b.label}
+          {...fadeUp}
+          transition={{ ...fadeUp.transition, delay: i * 0.08 }}
+          className="flex flex-col items-center gap-2"
+        >
+          {b.art}
+          <span className="text-xs font-semibold text-ink">{b.label}</span>
+          <span className="-mt-1.5 text-[10px] text-slate">{b.sub}</span>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
 export function Security() {
   return (
-    <section id="security" className="border-y border-line bg-mist py-24">
+    <section id="security" className="relative overflow-hidden border-y border-line bg-mist py-24">
+      <Backdrop />
       <div className="mx-auto max-w-6xl px-6">
         <motion.div {...fadeUp} className="mx-auto max-w-2xl text-center">
           <Eyebrow>Security &amp; data protection</Eyebrow>
@@ -479,7 +634,8 @@ export function Security() {
             </motion.div>
           ))}
         </div>
-        <motion.p {...fadeUp} className="mx-auto mt-12 max-w-2xl text-center text-slate">
+        <ComplianceBadges />
+        <motion.p {...fadeUp} className="mx-auto mt-10 max-w-2xl text-center text-slate">
           Designed to support GDPR, HIPAA, LGPD and DHA-aligned workflows —
           with processor agreements available for clinics, and full offline
           mode for practices with strict data-residency requirements.{" "}
@@ -571,7 +727,8 @@ export function Pricing() {
 
 export function FinalCTA() {
   return (
-    <section id="cta" className="border-t border-line bg-mist py-24">
+    <section id="cta" className="relative overflow-hidden border-t border-line bg-mist py-24">
+      <Backdrop />
       <motion.div {...fadeUp} className="mx-auto max-w-2xl px-6 text-center">
         <h2 className="font-display text-3xl font-bold tracking-tight md:text-5xl">
           Your outcomes deserve evidence,

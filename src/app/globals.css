@@ -64,6 +64,78 @@ body {
     0 24px 60px -12px rgba(11, 28, 43, 0.25);
 }
 
+/* ---- background life ---- */
+
+.aurora {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  opacity: 0.55;
+  pointer-events: none;
+  will-change: transform;
+}
+.aurora-teal {
+  background: radial-gradient(circle, rgba(14, 124, 123, 0.35), transparent 65%);
+  animation: drift-a 22s ease-in-out infinite alternate;
+}
+.aurora-mint {
+  background: radial-gradient(circle, rgba(94, 210, 190, 0.4), transparent 65%);
+  animation: drift-b 26s ease-in-out infinite alternate;
+}
+.aurora-sky {
+  background: radial-gradient(circle, rgba(125, 170, 230, 0.28), transparent 65%);
+  animation: drift-c 30s ease-in-out infinite alternate;
+}
+@keyframes drift-a {
+  from { transform: translate(-6%, -4%) scale(1); }
+  to { transform: translate(8%, 10%) scale(1.15); }
+}
+@keyframes drift-b {
+  from { transform: translate(6%, 8%) scale(1.1); }
+  to { transform: translate(-8%, -6%) scale(0.95); }
+}
+@keyframes drift-c {
+  from { transform: translate(0%, 6%) scale(0.95); }
+  to { transform: translate(-6%, -8%) scale(1.2); }
+}
+
+.dot-grid {
+  background-image: radial-gradient(rgba(11, 28, 43, 0.09) 1px, transparent 1px);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black 30%, transparent 75%);
+}
+
+.float-slow {
+  animation: bob 6s ease-in-out infinite;
+}
+.float-slower {
+  animation: bob 8s ease-in-out infinite reverse;
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, var(--teal), #35b3a2, #4f8fd0, var(--teal));
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-pan 7s linear infinite;
+}
+@keyframes gradient-pan {
+  to { background-position: 250% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-teal, .aurora-mint, .aurora-sky,
+  .float-slow, .float-slower, .gradient-text {
+    animation: none;
+  }
+}
+
 .nav-link {
   position: relative;
 }
