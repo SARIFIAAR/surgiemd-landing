@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { LegalShell, H2, P, UL, Callout } from "@/components/LegalPage";
 
 export const metadata: Metadata = {
@@ -11,111 +10,119 @@ export default function TermsPage() {
   return (
     <LegalShell title="Terms of Use" updated="September 10, 2026">
       <P>
-        These terms govern your use of the SurgiMD app and related services.
-        By creating an account or using the app, you agree to them.
+        These terms are an agreement between you and{" "}
+        <strong>Infinion Apps FZ-LLC</strong> (&ldquo;we&rdquo;). By creating
+        an account or using SurgiMD you accept them.
       </P>
 
-      <H2>Who may use SurgiMD</H2>
+      <H2>1. What SurgiMD is — and is not</H2>
       <P>
-        SurgiMD is built for licensed healthcare professionals and their
-        clinic staff. You must be at least 18, hold the professional
-        credentials your use implies, and use the app only within a
-        legitimate clinical relationship with the patients you photograph.
+        SurgiMD is a <strong>clinical photo-documentation aid</strong>:
+        standardized capture, storage, comparison and reporting of clinical
+        photographs.{" "}
+        <strong>
+          It does not provide medical advice, diagnosis or treatment
+          recommendations.
+        </strong>{" "}
+        Measurements and gradings are documentation conveniences, not
+        validated clinical instruments. All clinical decisions remain solely
+        the responsibility of the treating clinician.
       </P>
 
-      <H2>Your professional responsibility</H2>
+      <H2>2. Eligibility &amp; accounts</H2>
       <P>
-        SurgiMD provides technical safeguards; you remain responsible for
-        your clinical and legal obligations (see{" "}
-        <Link className="text-teal underline" href="/compliance/">
-          Security &amp; Compliance
-        </Link>{" "}
-        for how this shared-responsibility model works). In particular, you
-        are responsible for:
-      </P>
-      <UL
-        items={[
-          "Obtaining and documenting valid patient consent before capturing or sharing photographs (the app's consent capture exists to help, not to replace your duty).",
-          "Complying with the health-data and privacy laws of your jurisdiction, and your clinic's own policies.",
-          "Using exports appropriately — once data leaves the app through an export you authorize, its handling is your responsibility.",
-          "Keeping your account credentials and devices secure.",
-        ]}
-      />
-
-      <H2>License and acceptable use</H2>
-      <P>
-        We grant you a personal, non-transferable, revocable license to use
-        the app. You agree not to: reverse engineer or resell the service;
-        upload content you have no right to; use the app for anything other
-        than clinical documentation; or attempt to access other clinics&apos;
-        data.
+        You must be a licensed healthcare professional (or work under
+        one&apos;s supervision), 18 or older, using SurgiMD for professional
+        purposes. Keep your credentials and device secure; you are
+        responsible for activity under your account. Practice owners control
+        team membership and permissions and are responsible for their
+        team&apos;s use.
       </P>
 
-      <H2>Your content</H2>
+      <H2>3. Your data, your responsibility</H2>
       <P>
-        Patient records you create belong to you and your clinic. You grant
-        us only the limited rights needed to store, process, and display that
-        content back to you — nothing more. Our{" "}
-        <Link className="text-teal underline" href="/privacy/">
-          Privacy Policy
-        </Link>{" "}
-        governs how it is protected, retained, exported, and deleted.
+        The clinic owns its patient data. You grant us only the limited
+        licence needed to host, process and back it up to provide the
+        service. You are responsible for: obtaining and maintaining valid{" "}
+        <strong>patient consent</strong> for photography and any sharing;
+        complying with the healthcare, privacy and professional rules that
+        apply to you (e.g. GDPR, HIPAA, LGPD, DHA/UAE rules); and the
+        lawfulness of anything you export, share, print or save out of the
+        App.
       </P>
 
-      <H2>Subscriptions and billing</H2>
-      <UL
-        items={[
-          "SurgiMD offers a free tier and a paid Pro subscription, billed through your Apple App Store account.",
-          "Subscriptions renew automatically unless cancelled at least 24 hours before the end of the current period, via your App Store settings.",
-          "Prices may change; we will give notice before any change affects a renewal.",
-          "If you cancel, the retention, export, and deletion terms of the Privacy Policy apply.",
-        ]}
-      />
-
-      <H2>Not a medical device</H2>
+      <H2>4. Acceptable use</H2>
       <P>
-        SurgiMD is a documentation tool. It is not a medical device, does not
-        provide diagnosis or treatment recommendations, and its measurements
-        and overlays are aids to consistent photography — not clinical
-        instruments. Clinical judgment is yours alone.
+        Do not: use SurgiMD for unlawful purposes; upload content you have no
+        right to process; attempt to access other clinics&apos; data;
+        reverse-engineer or resell the service; or circumvent security or
+        consent controls.
       </P>
 
-      <H2>Availability and disclaimers</H2>
+      <H2>5. Subscriptions</H2>
       <P>
-        We work to keep the service reliable, but it is provided &ldquo;as
-        is&rdquo; without warranties of uninterrupted availability. To the
-        maximum extent permitted by law, our liability is limited to the
-        amounts you paid for the service in the 12 months preceding a claim.
-        Nothing in these terms limits liability that cannot lawfully be
-        limited.
+        The free tier is limited (15 patients). SurgiMD Pro is an
+        auto-renewing subscription purchased through Apple&apos;s App Store;
+        pricing is shown before purchase, billing and cancellation are
+        managed in your Apple ID settings, and renewal may be cancelled at
+        least 24 hours before the period ends. Fees are non-refundable except
+        where required by law or Apple&apos;s policies. If a subscription
+        lapses, your data remains accessible for export; feature access
+        returns to the free tier.
       </P>
 
-      <H2>Termination</H2>
+      <H2>6. Availability, backups, &ldquo;as is&rdquo;</H2>
       <P>
-        You may stop using SurgiMD at any time; the Privacy Policy&apos;s
-        export and deletion commitments apply. We may suspend or terminate
-        accounts that violate these terms or put patient data at risk, with
-        notice where practicable.
+        We aim for high availability but do not guarantee uninterrupted
+        service. Cloud backup is provided as a convenience; maintain your own
+        device security and export copies of records your practice must
+        retain. The service is provided{" "}
+        <strong>&ldquo;as is&rdquo; and &ldquo;as available&rdquo;</strong>{" "}
+        without warranties of any kind to the maximum extent permitted by
+        law.
       </P>
 
-      <H2>Governing law</H2>
+      <H2>7. Liability</H2>
       <P>
-        These terms are governed by the laws of the United Arab Emirates, and
-        disputes are subject to the courts of Dubai, unless mandatory law in
-        your jurisdiction provides otherwise.
+        To the maximum extent permitted by law, our total liability arising
+        out of the service is limited to the amounts you paid us in the
+        twelve months before the claim, and we are not liable for indirect or
+        consequential losses, or for clinical outcomes. Nothing limits
+        liability that cannot be limited by law. You will indemnify us
+        against claims arising from your breach of these terms, including
+        processing patient data without valid consent.
       </P>
 
-      <H2>Changes and contact</H2>
+      <H2>8. Intellectual property</H2>
       <P>
-        We will post updated terms here and note the date above; material
-        changes will be announced in the app. Questions:{" "}
-        <strong>support@surgimd.app</strong>.
+        SurgiMD, its design and software remain our property. Feedback you
+        send may be used without obligation. Third-party components are used
+        under their licences, including the 3D pose-guide artwork derived
+        from &ldquo;Human Head Base Mesh&rdquo; by ferrumiron6 (Sketchfab),
+        licensed CC-BY-4.0.
+      </P>
+
+      <H2>9. Termination</H2>
+      <P>
+        You may stop using the service and delete your account at any time.
+        We may suspend or terminate accounts that materially breach these
+        terms; on termination we will make clinic data available for export
+        for 30 days, then delete it, unless law requires otherwise.
+      </P>
+
+      <H2>10. Governing law &amp; changes</H2>
+      <P>
+        These terms are governed by the laws of the United Arab Emirates as
+        applied in the Emirate of Dubai; disputes are subject to the
+        exclusive jurisdiction of the Dubai courts. We may update these
+        terms; material changes will be announced in the App and take effect
+        no sooner than 14 days after posting. Contact:{" "}
+        <strong>legal@infinionapps.com</strong>.
       </P>
 
       <Callout>
-        These terms are a plain-language starting point and have not yet been
-        reviewed by counsel. Before charging clinics, have a lawyer review
-        them together with the Privacy Policy.
+        These terms are a working draft pending review by counsel. They are
+        not legal advice.
       </Callout>
     </LegalShell>
   );

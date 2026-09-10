@@ -421,25 +421,34 @@ export function Features() {
 
 const SECURITY_CARDS = [
   {
-    title: "Encrypted everywhere",
-    body: "Patient imagery is encrypted on device and in transit. Photos live in the app's secure store — never in your gallery.",
-    icon: (
-      <path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3zM9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
-    ),
+    emoji: "🔒",
+    title: "Encrypted end-to-end",
+    body: "On the device, in transit, in the cloud.",
   },
   {
-    title: "Biometric access",
-    body: "Face ID gates every session. Access is scoped per clinic, so patient data stays exactly where it belongs.",
-    icon: (
-      <path d="M7 3H5a2 2 0 0 0-2 2v2m14-4h2a2 2 0 0 1 2 2v2M7 21H5a2 2 0 0 1-2-2v-2m14 4h2a2 2 0 0 0 2-2v-2M9 9h.01M15 9h.01M9 15c.8.7 1.9 1 3 1s2.2-.3 3-1" strokeLinecap="round" strokeLinejoin="round" />
-    ),
+    emoji: "🫥",
+    title: "Zero hidden metadata",
+    body: "EXIF, GPS and device data stripped from every photo, automatically.",
   },
   {
-    title: "Designed for compliance",
-    body: "Built to support GDPR, HIPAA, LGPD and DHA-aligned workflows, with a tamper-evident audit log of every capture, export, and share.",
-    icon: (
-      <path d="M9 12h6m-6 4h6M9 8h1m4 0h1M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" strokeLinecap="round" strokeLinejoin="round" />
-    ),
+    emoji: "✍️",
+    title: "Consent-gated by design",
+    body: "Nothing is shared, printed or exported without the patient's documented, versioned consent.",
+  },
+  {
+    emoji: "⛓️",
+    title: "Tamper-evident audit trail",
+    body: "Every action cryptographically chained; alterations are impossible to hide.",
+  },
+  {
+    emoji: "🏥",
+    title: "Per-clinic isolation",
+    body: "Your patients are visible to your practice, and no one else — enforced server-side.",
+  },
+  {
+    emoji: "🚫",
+    title: "No ads. No analytics on patient data. Ever.",
+    body: "We charge for the product, not your data.",
   },
 ];
 
@@ -447,37 +456,37 @@ export function Security() {
   return (
     <section id="security" className="border-y border-line bg-mist py-24">
       <div className="mx-auto max-w-6xl px-6">
-        <motion.div {...fadeUp} className="mx-auto max-w-xl text-center">
-          <Eyebrow>Security &amp; compliance</Eyebrow>
+        <motion.div {...fadeUp} className="mx-auto max-w-2xl text-center">
+          <Eyebrow>Security &amp; data protection</Eyebrow>
           <h2 className="font-display mt-5 text-3xl font-bold tracking-tight md:text-4xl">
-            Clinical photos deserve clinical custody
+            Every photo is treated as protected health information —{" "}
+            <span className="text-teal">because it is.</span>
           </h2>
-          <p className="mt-4 text-slate">
-            Compliance is a partnership: SurgiMD provides the technical
-            safeguards, your clinic keeps its policies.{" "}
-            <Link href="/compliance/" className="font-semibold text-teal hover:text-teal-deep">
-              Read how our safeguards map to GDPR, HIPAA, LGPD and DHA →
-            </Link>
-          </p>
         </motion.div>
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
+        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {SECURITY_CARDS.map((c, i) => (
             <motion.div
               key={c.title}
               {...fadeUp}
-              transition={{ ...fadeUp.transition, delay: i * 0.1 }}
-              className="card-shadow rounded-2xl border border-line bg-paper p-8"
+              transition={{ ...fadeUp.transition, delay: i * 0.06 }}
+              className="card-shadow rounded-2xl border border-line bg-paper p-7"
             >
-              <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-mint text-teal">
-                <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8">
-                  {c.icon}
-                </svg>
+              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-mint text-xl">
+                <span aria-hidden>{c.emoji}</span>
               </div>
-              <h3 className="font-display text-lg font-bold">{c.title}</h3>
-              <p className="mt-2.5 text-[15px] leading-relaxed text-slate">{c.body}</p>
+              <h3 className="font-display text-[17px] font-bold leading-snug">{c.title}</h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-slate">{c.body}</p>
             </motion.div>
           ))}
         </div>
+        <motion.p {...fadeUp} className="mx-auto mt-12 max-w-2xl text-center text-slate">
+          Designed to support GDPR, HIPAA, LGPD and DHA-aligned workflows —
+          with processor agreements available for clinics, and full offline
+          mode for practices with strict data-residency requirements.{" "}
+          <Link href="/compliance/" className="font-semibold text-teal hover:text-teal-deep whitespace-nowrap">
+            How our safeguards map to each framework →
+          </Link>
+        </motion.p>
       </div>
     </section>
   );
@@ -503,7 +512,7 @@ export function Pricing() {
               $0<span className="ml-1.5 text-base font-medium text-slate">forever</span>
             </p>
             <ul className="mt-7 space-y-3 text-[15px] text-ink">
-              {["Up to 10 patients", "Guided capture with overlays", "Before & after comparison", "Encrypted storage"].map((f) => (
+              {["Up to 15 patients", "Guided capture with overlays", "Before & after comparison", "Encrypted storage"].map((f) => (
                 <li key={f} className="flex items-start gap-3">
                   <svg viewBox="0 0 24 24" className="mt-0.5 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
