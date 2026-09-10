@@ -18,7 +18,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SurgieMD — Every angle. Every visit. Identical.",
+  title: "SurgiMD — Every angle. Every visit. Identical.",
   description:
     "Standardized before & after photography for oculoplastic surgeons. Capture, align, and compare surgical outcomes with instrument-grade consistency.",
 };

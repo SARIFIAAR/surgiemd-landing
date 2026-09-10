@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 /* ---------------------------------- motion ---------------------------------- */
@@ -234,7 +235,7 @@ export function Nav() {
     <header className="fixed top-0 z-40 w-full border-b border-line/60 bg-paper/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <a href="#" className="font-display text-xl font-bold tracking-tight">
-          Surgie<span className="text-teal">MD</span>
+          Surgi<span className="text-teal">MD</span>
         </a>
         <nav className="hidden items-center gap-8 text-sm font-medium text-slate md:flex">
           <a className="nav-link hover:text-ink transition-colors" href="#capture">Capture</a>
@@ -270,7 +271,7 @@ export function Hero() {
             <span className="text-teal">perfectly consistent.</span>
           </h1>
           <p className="mt-6 max-w-md text-lg leading-relaxed text-slate">
-            SurgieMD guides every capture with silhouette overlays and angle
+            SurgiMD guides every capture with silhouette overlays and angle
             lock — so before &amp; after photos are comparable, secure, and
             ready to show.
           </p>
@@ -305,7 +306,7 @@ export function Hero() {
 /* -------------------------------- trust strip -------------------------------- */
 
 export function TrustStrip() {
-  const items = ["HIPAA-aligned workflows", "GDPR ready", "End-to-end encrypted", "On-device processing"];
+  const items = ["Designed to support HIPAA", "GDPR & LGPD ready", "DHA / UAE aware", "End-to-end encrypted"];
   return (
     <section className="border-y border-line bg-mist py-6">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-10 gap-y-3 px-6">
@@ -434,8 +435,8 @@ const SECURITY_CARDS = [
     ),
   },
   {
-    title: "Built for compliance",
-    body: "Designed around HIPAA-aligned and GDPR-ready workflows, with audit-friendly records of every capture.",
+    title: "Designed for compliance",
+    body: "Built to support GDPR, HIPAA, LGPD and DHA-aligned workflows, with a tamper-evident audit log of every capture, export, and share.",
     icon: (
       <path d="M9 12h6m-6 4h6M9 8h1m4 0h1M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" strokeLinecap="round" strokeLinejoin="round" />
     ),
@@ -451,6 +452,13 @@ export function Security() {
           <h2 className="font-display mt-5 text-3xl font-bold tracking-tight md:text-4xl">
             Clinical photos deserve clinical custody
           </h2>
+          <p className="mt-4 text-slate">
+            Compliance is a partnership: SurgiMD provides the technical
+            safeguards, your clinic keeps its policies.{" "}
+            <Link href="/compliance/" className="font-semibold text-teal hover:text-teal-deep">
+              Read how our safeguards map to GDPR, HIPAA, LGPD and DHA →
+            </Link>
+          </p>
         </motion.div>
         <div className="mt-14 grid gap-6 md:grid-cols-3">
           {SECURITY_CARDS.map((c, i) => (
@@ -577,13 +585,13 @@ export function Footer() {
     <footer className="border-t border-line py-10">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 text-sm text-slate md:flex-row">
         <span className="font-display font-bold text-ink">
-          Surgie<span className="text-teal">MD</span>
+          Surgi<span className="text-teal">MD</span>
         </span>
-        <span>© 2026 SurgieMD. Not a medical device. For documentation use.</span>
+        <span>© 2026 SurgiMD. Not a medical device. For documentation use.</span>
         <div className="flex gap-6">
-          <a className="nav-link hover:text-ink" href="#">Privacy</a>
-          <a className="nav-link hover:text-ink" href="#">Terms</a>
-          <a className="nav-link hover:text-ink" href="#">Contact</a>
+          <Link className="nav-link hover:text-ink" href="/privacy/">Privacy</Link>
+          <Link className="nav-link hover:text-ink" href="/terms/">Terms</Link>
+          <Link className="nav-link hover:text-ink" href="/compliance/">Compliance</Link>
         </div>
       </div>
     </footer>
