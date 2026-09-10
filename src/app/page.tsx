@@ -1,11 +1,9 @@
 import SmoothScroll from "@/components/SmoothScroll";
-import SceneLoader from "@/components/SceneLoader";
 import {
   Nav,
   Hero,
-  CaptureFlow,
-  Explode,
-  Showcase,
+  TrustStrip,
+  Features,
   Security,
   Pricing,
   FinalCTA,
@@ -16,13 +14,11 @@ export default function Home() {
   return (
     <>
       <SmoothScroll />
-      <SceneLoader />
       <Nav />
-      <main className="relative z-10">
+      <main>
         <Hero />
-        <CaptureFlow />
-        <Explode />
-        <Showcase />
+        <TrustStrip />
+        <Features />
         <Security />
         <Pricing />
         <FinalCTA />

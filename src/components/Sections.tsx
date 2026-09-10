@@ -1,39 +1,229 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
-import Link from "next/link";
 import { motion } from "framer-motion";
 
-/* ---------------------------------- shared ---------------------------------- */
+/* ---------------------------------- motion ---------------------------------- */
 
 const fadeUp = {
-  initial: { opacity: 0, y: 36 },
+  initial: { opacity: 0, y: 28 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
-  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
 };
 
-function AppStoreButton({ large = false }: { large?: boolean }) {
+/* ------------------------------- shared pieces ------------------------------- */
+
+function AppStoreBadge({ large = false }: { large?: boolean }) {
   return (
     <a
       href="#"
-      className={`shimmer-btn cta-gradient inline-flex items-center gap-3 rounded-full font-medium text-noir transition-transform hover:scale-[1.03] active:scale-[0.98] ${
-        large ? "px-8 py-4 text-lg" : "px-6 py-3 text-sm"
+      className={`inline-flex items-center gap-3 rounded-xl bg-ink text-white transition-all hover:bg-teal-deep hover:-translate-y-0.5 ${
+        large ? "px-7 py-4" : "px-5 py-3"
       }`}
     >
-      <svg viewBox="0 0 24 24" className={large ? "h-6 w-6" : "h-5 w-5"} fill="currentColor" aria-hidden>
+      <svg viewBox="0 0 24 24" className={large ? "h-8 w-8" : "h-6 w-6"} fill="currentColor" aria-hidden>
         <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8.79-.16 2.19-.91 3.7-.78 1.55.13 2.72.74 3.48 1.85-3.2 1.98-2.44 6.28.49 7.55-.6 1.52-1.37 3.03-2.75 3.55ZM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25Z" />
       </svg>
-      Download on the App Store
+      <span className="text-left leading-tight">
+        <span className={`block ${large ? "text-[11px]" : "text-[10px]"} opacity-75`}>
+          Download on the
+        </span>
+        <span className={`block font-semibold ${large ? "text-lg" : "text-sm"}`}>App Store</span>
+      </span>
     </a>
   );
 }
 
-function MonoTag({ children }: { children: React.ReactNode }) {
+function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-cyan">
+    <span className="inline-block rounded-full bg-mint px-3.5 py-1.5 text-xs font-semibold tracking-wide text-teal-deep">
       {children}
     </span>
+  );
+}
+
+/* -------------------------------- phone frame -------------------------------- */
+/* Mock screens are placeholders — swap the inner <Screen.../> for an
+   <img src="/screens/<name>.png"> once real app screenshots are captured. */
+
+function PhoneFrame({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={`phone-shadow relative rounded-[3rem] bg-[#1a222c] p-[10px] ${className}`}>
+      <div className="relative overflow-hidden rounded-[2.4rem] bg-[#0b1119]" style={{ aspectRatio: "9 / 19.5" }}>
+        {/* dynamic island */}
+        <div className="absolute left-1/2 top-2.5 z-20 h-[26px] w-[92px] -translate-x-1/2 rounded-full bg-black" />
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/* schematic eyelid line used across the mock screens */
+function EyelidGuide({ stroke = "#2dd4bf", ghost = false }: { stroke?: string; ghost?: boolean }) {
+  return (
+    <svg viewBox="0 0 200 120" className="h-full w-full" fill="none">
+      <path
+        d="M30 62 C 60 30, 140 30, 170 62"
+        stroke={stroke}
+        strokeWidth={ghost ? 1.5 : 2}
+        strokeLinecap="round"
+        opacity={ghost ? 0.45 : 1}
+      />
+      <path
+        d="M30 62 C 60 84, 140 84, 170 62"
+        stroke={stroke}
+        strokeWidth={ghost ? 1.5 : 2}
+        strokeLinecap="round"
+        opacity={ghost ? 0.45 : 1}
+      />
+      <circle cx="100" cy="60" r="14" stroke={stroke} strokeWidth={ghost ? 1.5 : 2} opacity={ghost ? 0.45 : 1} />
+      <path
+        d="M28 38 C 60 18, 140 18, 174 40"
+        stroke={stroke}
+        strokeWidth={ghost ? 1 : 1.5}
+        strokeLinecap="round"
+        opacity={ghost ? 0.3 : 0.6}
+      />
+    </svg>
+  );
+}
+
+function ScreenCapture() {
+  return (
+    <div className="absolute inset-0 flex flex-col bg-[#0b1119] pt-12 text-white">
+      <div className="flex items-center justify-between px-5 pb-3">
+        <span className="text-[11px] font-medium text-white/60">Patient #0042 · Visit 4</span>
+        <span className="rounded-full bg-teal/20 px-2 py-0.5 text-[10px] font-semibold text-[#2dd4bf]">
+          GUIDED
+        </span>
+      </div>
+      {/* viewfinder */}
+      <div className="relative mx-3 flex-1 overflow-hidden rounded-2xl bg-gradient-to-b from-[#1d2836] to-[#131b26]">
+        <div className="absolute inset-0 p-6">
+          <EyelidGuide />
+        </div>
+        {/* corner brackets */}
+        {["top-3 left-3 border-t-2 border-l-2", "top-3 right-3 border-t-2 border-r-2", "bottom-3 left-3 border-b-2 border-l-2", "bottom-3 right-3 border-b-2 border-r-2"].map((c) => (
+          <div key={c} className={`absolute h-5 w-5 rounded-sm border-[#2dd4bf] ${c}`} />
+        ))}
+        <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-2">
+          {["YAW 0.1°", "PITCH 0.0°", "40 CM"].map((t) => (
+            <span key={t} className="rounded-md bg-black/50 px-2 py-1 font-mono text-[9px] text-[#2dd4bf]">
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
+      {/* shutter */}
+      <div className="flex items-center justify-center gap-8 py-4">
+        <div className="h-8 w-8 rounded-lg bg-white/10" />
+        <div className="flex h-14 w-14 items-center justify-center rounded-full border-[3px] border-white">
+          <div className="h-10 w-10 rounded-full bg-[#2dd4bf]" />
+        </div>
+        <div className="h-8 w-8 rounded-lg bg-white/10" />
+      </div>
+    </div>
+  );
+}
+
+function ScreenCompare() {
+  return (
+    <div className="absolute inset-0 flex flex-col bg-[#0b1119] pt-12 text-white">
+      <div className="px-5 pb-3">
+        <span className="text-sm font-semibold">Blepharoplasty · R. Haddad</span>
+        <span className="mt-0.5 block text-[11px] text-white/50">Pre-op vs. week 12</span>
+      </div>
+      <div className="mx-3 grid flex-1 grid-cols-2 gap-2">
+        {(["BEFORE", "AFTER"] as const).map((label) => (
+          <div
+            key={label}
+            className="relative overflow-hidden rounded-xl bg-gradient-to-b from-[#233043] to-[#141c29]"
+          >
+            <div className="absolute inset-0 p-4 opacity-80">
+              <EyelidGuide stroke={label === "BEFORE" ? "#8a98ad" : "#2dd4bf"} />
+            </div>
+            <span className="absolute left-2.5 top-2.5 rounded bg-black/50 px-1.5 py-0.5 font-mono text-[9px] text-white/80">
+              {label}
+            </span>
+          </div>
+        ))}
+      </div>
+      <div className="mx-3 my-3 rounded-xl bg-white/5 p-3">
+        <div className="flex justify-between text-[11px]">
+          <span className="text-white/60">Margin reflex distance</span>
+          <span className="font-mono font-semibold text-[#2dd4bf]">+2.4 mm</span>
+        </div>
+        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
+          <div className="h-full w-3/4 rounded-full bg-[#2dd4bf]" />
+        </div>
+      </div>
+      <div className="flex justify-center gap-2 pb-5">
+        {["Side by side", "Slider", "Grid"].map((t, i) => (
+          <span
+            key={t}
+            className={`rounded-full px-3 py-1.5 text-[10px] font-medium ${
+              i === 0 ? "bg-[#2dd4bf] text-[#0b1119]" : "bg-white/10 text-white/60"
+            }`}
+          >
+            {t}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ScreenPatients() {
+  const rows = [
+    { name: "R. Haddad", detail: "Blepharoplasty · 4 visits", tag: "Post-op" },
+    { name: "M. Chen", detail: "Ptosis repair · 2 visits", tag: "Pre-op" },
+    { name: "A. Okafor", detail: "Brow lift · 6 visits", tag: "Healed" },
+    { name: "S. Rossi", detail: "Blepharoplasty · 3 visits", tag: "Post-op" },
+    { name: "L. Nguyen", detail: "Ectropion · 5 visits", tag: "Review" },
+  ];
+  return (
+    <div className="absolute inset-0 flex flex-col bg-[#0b1119] pt-12 text-white">
+      <div className="px-5 pb-3">
+        <span className="text-lg font-semibold">Patients</span>
+        <div className="mt-2.5 flex items-center gap-2 rounded-xl bg-white/8 px-3 py-2 text-[11px] text-white/40">
+          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.5-3.5" strokeLinecap="round" />
+          </svg>
+          Search patients or tags
+        </div>
+      </div>
+      <div className="flex-1 space-y-1.5 px-3">
+        {rows.map((r, i) => (
+          <div key={r.name} className="flex items-center gap-3 rounded-xl bg-white/5 p-2.5">
+            <div
+              className="flex h-9 w-9 items-center justify-center rounded-full text-[11px] font-bold"
+              style={{ background: ["#134e4a", "#1e3a5f", "#3f2d54", "#134e4a", "#52351c"][i], color: "#e0f2f1" }}
+            >
+              {r.name.slice(0, 1)}
+            </div>
+            <div className="flex-1 leading-tight">
+              <span className="block text-[12px] font-semibold">{r.name}</span>
+              <span className="block text-[10px] text-white/45">{r.detail}</span>
+            </div>
+            <span className="rounded-full bg-teal/15 px-2 py-0.5 text-[9px] font-semibold text-[#2dd4bf]">
+              {r.tag}
+            </span>
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-around border-t border-white/10 py-3 text-[9px] text-white/40">
+        {["Patients", "Capture", "Portfolio", "Settings"].map((t, i) => (
+          <span key={t} className={i === 0 ? "font-semibold text-[#2dd4bf]" : ""}>{t}</span>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -41,21 +231,20 @@ function MonoTag({ children }: { children: React.ReactNode }) {
 
 export function Nav() {
   return (
-    <header className="fixed top-0 z-40 w-full">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-        <a href="#" className="font-display text-lg font-semibold tracking-tight">
-          Surgie<span className="text-cyan">MD</span>
+    <header className="fixed top-0 z-40 w-full border-b border-line/60 bg-paper/80 backdrop-blur-md">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <a href="#" className="font-display text-xl font-bold tracking-tight">
+          Surgie<span className="text-teal">MD</span>
         </a>
-        <nav className="hidden items-center gap-8 text-sm text-steel md:flex">
-          <a className="nav-link hover:text-paper transition-colors" href="#capture">Capture</a>
-          <a className="nav-link hover:text-paper transition-colors" href="#showcase">Outcomes</a>
-          <a className="nav-link hover:text-paper transition-colors" href="#security">Security</a>
-          <a className="nav-link hover:text-paper transition-colors" href="#pricing">Pricing</a>
-          <Link className="nav-link text-cyan/80 hover:text-cyan transition-colors" href="/orbit/">Concept B</Link>
+        <nav className="hidden items-center gap-8 text-sm font-medium text-slate md:flex">
+          <a className="nav-link hover:text-ink transition-colors" href="#capture">Capture</a>
+          <a className="nav-link hover:text-ink transition-colors" href="#compare">Compare</a>
+          <a className="nav-link hover:text-ink transition-colors" href="#security">Security</a>
+          <a className="nav-link hover:text-ink transition-colors" href="#pricing">Pricing</a>
         </nav>
         <a
           href="#cta"
-          className="rounded-full border border-cyan/40 px-5 py-2 text-sm text-cyan transition-colors hover:bg-cyan/10"
+          className="rounded-full bg-teal px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-teal-deep"
         >
           Download
         </a>
@@ -68,370 +257,294 @@ export function Nav() {
 
 export function Hero() {
   return (
-    <section className="relative flex h-svh flex-col items-center justify-end pb-20 text-center">
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.4, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 px-6"
-      >
-        <MonoTag>Standardized surgical photography</MonoTag>
-        <h1 className="font-display mx-auto mt-4 max-w-3xl text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl">
-          Every angle. Every visit.{" "}
-          <span className="bg-gradient-to-r from-cyan to-violet bg-clip-text text-transparent">
-            Identical.
-          </span>
-        </h1>
-        <p className="mx-auto mt-6 max-w-xl text-base text-steel md:text-lg">
-          SurgieMD turns before &amp; after photography into a measurement
-          instrument — framing guides, angle lock, and secure patient records,
-          built for oculoplastic surgeons.
-        </p>
-        <div className="mt-9 flex items-center justify-center gap-5">
-          <AppStoreButton />
-        </div>
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.4, duration: 1 }}
-        className="mt-16 flex flex-col items-center gap-4"
-      >
-        <div className="focus-ring h-3 w-3 rounded-full bg-cyan/80" />
-        <span className="font-mono text-[10px] tracking-[0.3em] text-steel">SCROLL</span>
-      </motion.div>
-    </section>
-  );
-}
-
-/* ----------------------------- act II: capture flow ----------------------------- */
-
-const CAPTURE_STEPS = [
-  {
-    tag: "01 · Frame",
-    title: "Thin-line guides frame the anatomy",
-    body: "A silhouette overlay positions the orbit, brow, and lid margin exactly where they were last visit — no guesswork, no cropped landmarks.",
-  },
-  {
-    tag: "02 · Align",
-    title: "Ghost overlay locks the angle",
-    body: "The previous capture appears as a ghost. Live yaw, pitch, and distance readouts converge to zero as you match it — then the frame locks.",
-  },
-  {
-    tag: "03 · Capture",
-    title: "One tap, perfectly comparable",
-    body: "The shutter fires only inside tolerance. Geometry is stored with the image, so every photo in the series is measurably identical.",
-  },
-];
-
-export function CaptureFlow() {
-  return (
-    <section id="capture" className="relative" style={{ height: "300vh" }}>
-      <div className="sticky top-0 flex h-svh items-center">
-        <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-10 px-6 md:grid-cols-2">
-          <div aria-hidden />
-          <div className="flex flex-col justify-center gap-16">
-            {CAPTURE_STEPS.map((s) => (
-              <motion.div key={s.tag} {...fadeUp} className="max-w-md">
-                <MonoTag>{s.tag}</MonoTag>
-                <h3 className="font-display mt-3 text-2xl font-semibold tracking-tight md:text-3xl">
-                  {s.title}
-                </h3>
-                <p className="mt-3 text-steel">{s.body}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ----------------------------- act III: explode ----------------------------- */
-
-export function Explode() {
-  return (
-    <section id="explode" className="relative" style={{ height: "200vh" }}>
-      <div className="sticky top-0 flex h-svh items-center">
-        <div className="mx-auto w-full max-w-6xl px-6">
-          <motion.div {...fadeUp} className="max-w-md">
-            <MonoTag>The standardization system</MonoTag>
-            <h2 className="font-display mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
-              Four layers.
-              <br />
-              Zero variance.
-            </h2>
-            <p className="mt-5 text-steel">
-              Every capture is a stack: the raw image, the silhouette guide it
-              was framed against, the geometry it was captured at, and the
-              patient record it files into. That stack is why visit 14 is
-              comparable to visit 1.
-            </p>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* --------------------------- act IV: before / after --------------------------- */
-
-function SchematicEye({ droop }: { droop: number }) {
-  // schematic eyelid illustration; droop shifts the upper lid down (pre-op ptosis)
-  const lidY = 90 + droop;
-  return (
-    <svg viewBox="0 0 400 260" className="h-full w-full">
-      <defs>
-        <radialGradient id={`skin-${droop}`} cx="50%" cy="45%" r="75%">
-          <stop offset="0%" stopColor="#22314e" />
-          <stop offset="100%" stopColor="#0d1422" />
-        </radialGradient>
-      </defs>
-      <rect width="400" height="260" fill={`url(#skin-${droop})`} />
-      {/* brow */}
-      <path
-        d={`M 80 ${52 + droop * 0.4} C 150 ${30 + droop * 0.4}, 250 ${30 + droop * 0.4}, 330 ${58 + droop * 0.4}`}
-        stroke="#8a98ad" strokeWidth="7" fill="none" strokeLinecap="round" opacity="0.65"
-      />
-      {/* upper lid */}
-      <path
-        d={`M 90 130 C 150 ${lidY - 38}, 250 ${lidY - 38}, 310 130`}
-        stroke="#f4f7fb" strokeWidth="3.5" fill="none" strokeLinecap="round"
-      />
-      {/* lower lid */}
-      <path
-        d="M 90 130 C 150 168, 250 168, 310 130"
-        stroke="#f4f7fb" strokeWidth="3" fill="none" strokeLinecap="round"
-      />
-      {/* iris, partially covered by lid */}
-      <clipPath id={`eye-open-${droop}`}>
-        <path d={`M 90 130 C 150 ${lidY - 38}, 250 ${lidY - 38}, 310 130 C 250 168, 150 168, 90 130 Z`} />
-      </clipPath>
-      <g clipPath={`url(#eye-open-${droop})`}>
-        <circle cx="200" cy="128" r="34" fill="#38e1d4" opacity="0.85" />
-        <circle cx="200" cy="128" r="14" fill="#060b14" />
-      </g>
-      {/* crease line */}
-      <path
-        d={`M 110 ${lidY - 26} C 160 ${lidY - 52}, 240 ${lidY - 52}, 290 ${lidY - 26}`}
-        stroke="#8a98ad" strokeWidth="2" fill="none" opacity="0.5" strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-export function Showcase() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [pos, setPos] = useState(0.5);
-  const [flash, setFlash] = useState(false);
-
-  const onDrag = useCallback((clientX: number) => {
-    const el = trackRef.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    setPos(Math.min(0.96, Math.max(0.04, (clientX - r.left) / r.width)));
-  }, []);
-
-  return (
-    <section id="showcase" className="relative py-32">
-      <div className="mx-auto max-w-6xl px-6">
-        <motion.div {...fadeUp} className="mb-14 max-w-xl">
-          <MonoTag>Outcome comparison</MonoTag>
-          <h2 className="font-display mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
-            Results your patients can see.
-          </h2>
-          <p className="mt-5 text-steel">
-            Because every capture shares identical geometry, comparison is
-            honest — same angle, same distance, same light. Drag the beam.
+    <section className="relative overflow-hidden pt-36 pb-24">
+      <div className="mx-auto grid max-w-6xl items-center gap-16 px-6 md:grid-cols-2">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Eyebrow>For oculoplastic &amp; aesthetic surgeons</Eyebrow>
+          <h1 className="font-display mt-5 text-5xl font-bold leading-[1.06] tracking-tight md:text-6xl">
+            Patient photos,{" "}
+            <span className="text-teal">perfectly consistent.</span>
+          </h1>
+          <p className="mt-6 max-w-md text-lg leading-relaxed text-slate">
+            SurgieMD guides every capture with silhouette overlays and angle
+            lock — so before &amp; after photos are comparable, secure, and
+            ready to show.
           </p>
-        </motion.div>
-
-        <motion.div {...fadeUp}>
-          <div
-            ref={trackRef}
-            className="relative aspect-[16/9] w-full cursor-ew-resize touch-none select-none overflow-hidden rounded-2xl border border-steel/15 bg-panel"
-            onPointerDown={(e) => {
-              (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
-              onDrag(e.clientX);
-            }}
-            onPointerMove={(e) => e.buttons === 1 && onDrag(e.clientX)}
-            onPointerUp={() => {
-              setFlash(true);
-              setTimeout(() => setFlash(false), 450);
-            }}
-          >
-            {/* after (base) */}
-            <div className="absolute inset-0">
-              <SchematicEye droop={0} />
-              <span className="absolute right-5 top-5 font-mono text-[11px] tracking-[0.22em] text-cyan">
-                AFTER · WEEK 12
-              </span>
-            </div>
-            {/* before (clipped) */}
-            <div
-              className="absolute inset-0"
-              style={{ clipPath: `inset(0 ${(1 - pos) * 100}% 0 0)` }}
-            >
-              <SchematicEye droop={26} />
-              <span className="absolute left-5 top-5 font-mono text-[11px] tracking-[0.22em] text-steel">
-                BEFORE · PRE-OP
-              </span>
-            </div>
-            {/* light-beam divider */}
-            <div
-              className="pointer-events-none absolute inset-y-0 z-10"
-              style={{ left: `calc(${pos * 100}% - 1px)` }}
-            >
-              <div
-                className={`h-full w-0.5 bg-cyan transition-shadow ${
-                  flash
-                    ? "shadow-[0_0_60px_14px_rgba(56,225,212,0.65)]"
-                    : "shadow-[0_0_24px_4px_rgba(56,225,212,0.45)]"
-                }`}
-              />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full border border-cyan bg-noir/80 text-cyan backdrop-blur">
-                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M8 7l-4 5 4 5M16 7l4 5-4 5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <span className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-[11px] tracking-[0.22em] text-steel">
-              MARGIN REFLEX DISTANCE +2.4 MM
-            </span>
+          <div className="mt-9 flex flex-wrap items-center gap-4">
+            <AppStoreBadge />
+            <a href="#capture" className="text-sm font-semibold text-teal hover:text-teal-deep">
+              See how it works →
+            </a>
           </div>
+          <div className="mt-10 flex items-center gap-6 text-xs font-medium text-slate">
+            <span>✓ Free for your first patients</span>
+            <span>✓ No camera-roll storage</span>
+          </div>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          className="relative mx-auto w-64 md:w-72"
+        >
+          {/* soft halo behind phone */}
+          <div className="absolute -inset-10 -z-10 rounded-full bg-mint blur-3xl" />
+          <PhoneFrame>
+            <ScreenCapture />
+          </PhoneFrame>
         </motion.div>
       </div>
     </section>
   );
 }
 
-/* ------------------------------- act V: security ------------------------------- */
+/* -------------------------------- trust strip -------------------------------- */
 
-const SECURITY_ITEMS = [
+export function TrustStrip() {
+  const items = ["HIPAA-aligned workflows", "GDPR ready", "End-to-end encrypted", "On-device processing"];
+  return (
+    <section className="border-y border-line bg-mist py-6">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-10 gap-y-3 px-6">
+        {items.map((t) => (
+          <span key={t} className="flex items-center gap-2 text-sm font-medium text-slate">
+            <svg viewBox="0 0 24 24" className="h-4 w-4 text-teal" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            {t}
+          </span>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------- feature rows ------------------------------- */
+
+function FeatureRow({
+  id,
+  eyebrow,
+  title,
+  body,
+  bullets,
+  screen,
+  flip = false,
+}: {
+  id: string;
+  eyebrow: string;
+  title: string;
+  body: string;
+  bullets: string[];
+  screen: React.ReactNode;
+  flip?: boolean;
+}) {
+  return (
+    <section id={id} className="py-24">
+      <div
+        className={`mx-auto grid max-w-6xl items-center gap-16 px-6 md:grid-cols-2 ${
+          flip ? "md:[&>*:first-child]:order-2" : ""
+        }`}
+      >
+        <motion.div {...fadeUp}>
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="font-display mt-5 text-3xl font-bold tracking-tight md:text-4xl">{title}</h2>
+          <p className="mt-5 max-w-md text-lg leading-relaxed text-slate">{body}</p>
+          <ul className="mt-7 space-y-3">
+            {bullets.map((b) => (
+              <li key={b} className="flex items-start gap-3 text-[15px] text-ink">
+                <svg viewBox="0 0 24 24" className="mt-0.5 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                {b}
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+        <motion.div {...fadeUp} className="relative mx-auto w-60 md:w-64">
+          <div className="absolute -inset-8 -z-10 rounded-full bg-mist blur-2xl" />
+          <PhoneFrame>{screen}</PhoneFrame>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+export function Features() {
+  return (
+    <>
+      <FeatureRow
+        id="capture"
+        eyebrow="Guided capture"
+        title="Frame it right, every single time"
+        body="Thin-line silhouette guides position the anatomy exactly where it was last visit, while live angle and distance readouts keep the shot inside tolerance."
+        bullets={[
+          "Procedure-specific silhouette overlays",
+          "Live yaw, pitch and distance lock",
+          "Ghost overlay of the previous visit",
+        ]}
+        screen={<ScreenCapture />}
+      />
+      <FeatureRow
+        id="compare"
+        eyebrow="Outcome comparison"
+        title="Before & after that holds up"
+        body="Because every photo shares identical geometry, comparisons are honest — same angle, same distance, same framing. Export clean collages for consults and case logs."
+        bullets={[
+          "Side-by-side, slider and grid layouts",
+          "Visit-to-visit measurement tracking",
+          "Export-ready, watermark-free collages",
+        ]}
+        screen={<ScreenCompare />}
+        flip
+      />
+      <FeatureRow
+        id="records"
+        eyebrow="Patient records"
+        title="Organized by patient, not camera roll"
+        body="Every capture files itself into the right patient, visit, and procedure — tagged, searchable, and synced to your clinic across devices."
+        bullets={[
+          "Tags and searchable case portfolio",
+          "Clinic-scoped cloud sync",
+          "Nothing ever touches your camera roll",
+        ]}
+        screen={<ScreenPatients />}
+      />
+    </>
+  );
+}
+
+/* --------------------------------- security --------------------------------- */
+
+const SECURITY_CARDS = [
   {
-    title: "Encrypted at rest and in transit",
-    body: "Patient imagery is encrypted on device and in the cloud. Nothing is ever stored in your camera roll.",
+    title: "Encrypted everywhere",
+    body: "Patient imagery is encrypted on device and in transit. Photos live in the app's secure store — never in your gallery.",
+    icon: (
+      <path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3zM9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
+    ),
   },
   {
-    title: "Biometric access control",
-    body: "Face ID gates every session. Practice staff get scoped, revocable access — patients stay siloed per surgeon.",
+    title: "Biometric access",
+    body: "Face ID gates every session. Access is scoped per clinic, so patient data stays exactly where it belongs.",
+    icon: (
+      <path d="M7 3H5a2 2 0 0 0-2 2v2m14-4h2a2 2 0 0 1 2 2v2M7 21H5a2 2 0 0 1-2-2v-2m14 4h2a2 2 0 0 0 2-2v-2M9 9h.01M15 9h.01M9 15c.8.7 1.9 1 3 1s2.2-.3 3-1" strokeLinecap="round" strokeLinejoin="round" />
+    ),
   },
   {
-    title: "Complete audit trail",
-    body: "Every view, export, and share is logged with who, when, and what — evidence-grade custody for clinical records.",
+    title: "Built for compliance",
+    body: "Designed around HIPAA-aligned and GDPR-ready workflows, with audit-friendly records of every capture.",
+    icon: (
+      <path d="M9 12h6m-6 4h6M9 8h1m4 0h1M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" strokeLinecap="round" strokeLinejoin="round" />
+    ),
   },
 ];
 
 export function Security() {
   return (
-    <section id="security" className="grid-texture relative border-y border-steel/10 bg-[#04070d] py-32">
+    <section id="security" className="border-y border-line bg-mist py-24">
       <div className="mx-auto max-w-6xl px-6">
-        <motion.div {...fadeUp} className="max-w-xl">
-          <MonoTag>Built for patient trust</MonoTag>
-          <h2 className="font-display mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
-            Clinical records deserve
-            <br />
-            clinical custody.
+        <motion.div {...fadeUp} className="mx-auto max-w-xl text-center">
+          <Eyebrow>Security &amp; compliance</Eyebrow>
+          <h2 className="font-display mt-5 text-3xl font-bold tracking-tight md:text-4xl">
+            Clinical photos deserve clinical custody
           </h2>
         </motion.div>
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
-          {SECURITY_ITEMS.map((item, i) => (
+        <div className="mt-14 grid gap-6 md:grid-cols-3">
+          {SECURITY_CARDS.map((c, i) => (
             <motion.div
-              key={item.title}
+              key={c.title}
               {...fadeUp}
-              transition={{ ...fadeUp.transition, delay: i * 0.12 }}
-              className="rounded-2xl border border-steel/15 bg-panel/60 p-8 backdrop-blur"
+              transition={{ ...fadeUp.transition, delay: i * 0.1 }}
+              className="card-shadow rounded-2xl border border-line bg-paper p-8"
             >
-              <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-full border border-gold/50 text-gold">
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
-                  <path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z" strokeLinejoin="round" />
-                  <path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
+              <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-mint text-teal">
+                <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  {c.icon}
                 </svg>
               </div>
-              <h3 className="font-display text-lg font-semibold">{item.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-steel">{item.body}</p>
+              <h3 className="font-display text-lg font-bold">{c.title}</h3>
+              <p className="mt-2.5 text-[15px] leading-relaxed text-slate">{c.body}</p>
             </motion.div>
           ))}
         </div>
-        <motion.p {...fadeUp} className="mt-10 font-mono text-[11px] tracking-[0.2em] text-steel/70">
-          DESIGNED FOR HIPAA-ALIGNED WORKFLOWS · ON-DEVICE PROCESSING · ZERO CAMERA-ROLL LEAKAGE
-        </motion.p>
       </div>
     </section>
   );
 }
 
-/* -------------------------------- act VI: pricing -------------------------------- */
+/* ---------------------------------- pricing ---------------------------------- */
 
 export function Pricing() {
   return (
-    <section id="pricing" className="relative py-32">
+    <section id="pricing" className="py-24">
       <div className="mx-auto max-w-6xl px-6">
-        <motion.div {...fadeUp} className="max-w-xl">
-          <MonoTag>Pricing</MonoTag>
-          <h2 className="font-display mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
-            Start free. Scale with your practice.
+        <motion.div {...fadeUp} className="mx-auto max-w-xl text-center">
+          <Eyebrow>Pricing</Eyebrow>
+          <h2 className="font-display mt-5 text-3xl font-bold tracking-tight md:text-4xl">
+            Start free. Upgrade when your caseload does.
           </h2>
         </motion.div>
-
-        <div className="mt-16 grid gap-6 md:grid-cols-2">
-          <motion.div
-            {...fadeUp}
-            className="rounded-3xl border border-steel/15 bg-panel/60 p-10 transition-transform hover:-translate-y-2"
-          >
-            <h3 className="font-display text-xl font-semibold">Free</h3>
-            <p className="mt-2 text-sm text-steel">For evaluating the workflow</p>
-            <p className="font-display mt-8 text-5xl font-semibold">
-              $0
-              <span className="ml-2 text-base font-normal text-steel">forever</span>
+        <div className="mx-auto mt-14 grid max-w-4xl gap-6 md:grid-cols-2">
+          <motion.div {...fadeUp} className="card-shadow rounded-3xl border border-line bg-paper p-9">
+            <h3 className="font-display text-xl font-bold">Free</h3>
+            <p className="mt-1.5 text-sm text-slate">Evaluate the full workflow</p>
+            <p className="font-display mt-7 text-5xl font-bold">
+              $0<span className="ml-1.5 text-base font-medium text-slate">forever</span>
             </p>
-            <ul className="mt-8 space-y-3 text-sm text-steel">
-              <li>· Up to 10 patients</li>
-              <li>· Standardized capture guides</li>
-              <li>· Before / after comparison</li>
-              <li>· Encrypted local storage</li>
+            <ul className="mt-7 space-y-3 text-[15px] text-ink">
+              {["Up to 10 patients", "Guided capture with overlays", "Before & after comparison", "Encrypted storage"].map((f) => (
+                <li key={f} className="flex items-start gap-3">
+                  <svg viewBox="0 0 24 24" className="mt-0.5 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  {f}
+                </li>
+              ))}
             </ul>
             <a
               href="#cta"
-              className="mt-10 inline-block rounded-full border border-steel/40 px-7 py-3 text-sm transition-colors hover:border-paper hover:text-paper"
+              className="mt-9 block rounded-xl border-2 border-line py-3 text-center text-sm font-semibold transition-colors hover:border-teal hover:text-teal"
             >
-              Get started
+              Get started free
             </a>
           </motion.div>
-
           <motion.div
             {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.12 }}
-            className="border-beam rounded-3xl border border-transparent bg-panel p-10 transition-transform hover:-translate-y-2"
+            transition={{ ...fadeUp.transition, delay: 0.1 }}
+            className="card-shadow relative rounded-3xl border-2 border-teal bg-paper p-9"
           >
-            <div className="flex items-center justify-between">
-              <h3 className="font-display text-xl font-semibold">Pro</h3>
-              <span className="rounded-full border border-gold/50 px-3 py-1 font-mono text-[10px] tracking-[0.2em] text-gold">
-                FOR PRACTICES
-              </span>
-            </div>
-            <p className="mt-2 text-sm text-steel">For the full surgical caseload</p>
-            <p className="font-display mt-8 text-5xl font-semibold">
-              $19
-              <span className="ml-2 text-base font-normal text-steel">/ month</span>
+            <span className="absolute -top-3.5 left-8 rounded-full bg-teal px-3 py-1 text-xs font-bold text-white">
+              MOST POPULAR
+            </span>
+            <h3 className="font-display text-xl font-bold">Pro</h3>
+            <p className="mt-1.5 text-sm text-slate">For the full surgical caseload</p>
+            <p className="font-display mt-7 text-5xl font-bold">
+              $19<span className="ml-1.5 text-base font-medium text-slate">/ month</span>
             </p>
-            <ul className="mt-8 space-y-3 text-sm text-steel">
-              <li>· Unlimited patients</li>
-              <li>· Cloud sync &amp; multi-device</li>
-              <li>· Ghost-overlay alignment</li>
-              <li>· Export-ready comparisons</li>
-              <li>· Priority support</li>
+            <ul className="mt-7 space-y-3 text-[15px] text-ink">
+              {["Unlimited patients", "Clinic-wide cloud sync", "Ghost-overlay alignment", "Export-ready collages", "Priority support"].map((f) => (
+                <li key={f} className="flex items-start gap-3">
+                  <svg viewBox="0 0 24 24" className="mt-0.5 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  {f}
+                </li>
+              ))}
             </ul>
             <a
               href="#cta"
-              className="shimmer-btn cta-gradient mt-10 inline-block rounded-full px-7 py-3 text-sm font-medium text-noir"
+              className="mt-9 block rounded-xl bg-teal py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-teal-deep"
             >
               Start Pro trial
             </a>
           </motion.div>
         </div>
+        <motion.p {...fadeUp} className="mt-8 text-center text-xs text-slate">
+          Prices shown are placeholders pending App Store Connect approval.
+        </motion.p>
       </div>
     </section>
   );
@@ -441,20 +554,19 @@ export function Pricing() {
 
 export function FinalCTA() {
   return (
-    <section id="cta" className="relative flex min-h-svh flex-col items-center justify-center py-32 text-center">
-      <motion.div {...fadeUp} className="relative z-10 px-6">
-        <MonoTag>Available on iPhone</MonoTag>
-        <h2 className="font-display mx-auto mt-5 max-w-2xl text-4xl font-semibold tracking-tight md:text-6xl">
-          Your outcomes deserve
+    <section id="cta" className="border-t border-line bg-mist py-24">
+      <motion.div {...fadeUp} className="mx-auto max-w-2xl px-6 text-center">
+        <h2 className="font-display text-3xl font-bold tracking-tight md:text-5xl">
+          Your outcomes deserve evidence,
           <br />
-          evidence, not estimates.
+          not estimates.
         </h2>
-        <div className="mt-10">
-          <AppStoreButton large />
-        </div>
-        <p className="mt-8 font-mono text-[11px] tracking-[0.22em] text-steel/70">
-          TRUSTED BY OCULOPLASTIC SURGEONS · BUILT WITH CLINICIANS
+        <p className="mx-auto mt-5 max-w-md text-lg text-slate">
+          Join the surgeons documenting results with instrument-grade consistency.
         </p>
+        <div className="mt-9 flex justify-center">
+          <AppStoreBadge large />
+        </div>
       </motion.div>
     </section>
   );
@@ -462,16 +574,16 @@ export function FinalCTA() {
 
 export function Footer() {
   return (
-    <footer className="border-t border-steel/10 py-10">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 text-sm text-steel md:flex-row">
-        <span className="font-display font-semibold text-paper">
-          Surgie<span className="text-cyan">MD</span>
+    <footer className="border-t border-line py-10">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 text-sm text-slate md:flex-row">
+        <span className="font-display font-bold text-ink">
+          Surgie<span className="text-teal">MD</span>
         </span>
         <span>© 2026 SurgieMD. Not a medical device. For documentation use.</span>
         <div className="flex gap-6">
-          <a className="nav-link" href="#">Privacy</a>
-          <a className="nav-link" href="#">Terms</a>
-          <a className="nav-link" href="#">Contact</a>
+          <a className="nav-link hover:text-ink" href="#">Privacy</a>
+          <a className="nav-link hover:text-ink" href="#">Terms</a>
+          <a className="nav-link hover:text-ink" href="#">Contact</a>
         </div>
       </div>
     </footer>
