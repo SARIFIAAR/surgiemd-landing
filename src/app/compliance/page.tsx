@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "SurgiMD — Security & Compliance",
   description:
     "How SurgiMD's technical and organisational measures map to GDPR, HIPAA, and UAE health data law.",
+  alternates: { canonical: "/compliance/" },
 };
 
 export default function CompliancePage() {

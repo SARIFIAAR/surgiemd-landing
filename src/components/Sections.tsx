@@ -14,10 +14,14 @@ const fadeUp = {
 
 /* ------------------------------- shared pieces ------------------------------- */
 
+const APP_STORE_URL = "https://apps.apple.com/app/id6757500321";
+
 function AppStoreBadge({ large = false }: { large?: boolean }) {
   return (
     <a
-      href="#"
+      href={APP_STORE_URL}
+      target="_blank"
+      rel="noopener"
       className={`inline-flex items-center gap-3 rounded-xl bg-ink text-white transition-all hover:bg-teal-deep hover:-translate-y-0.5 ${
         large ? "px-7 py-4" : "px-5 py-3"
       }`}
@@ -280,7 +284,9 @@ export function Nav() {
           <a className="nav-link hover:text-ink transition-colors" href="#faq">FAQ</a>
         </nav>
         <a
-          href="#cta"
+          href={APP_STORE_URL}
+          target="_blank"
+          rel="noopener"
           className="rounded-full bg-teal px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-teal-deep"
         >
           Download
@@ -732,6 +738,7 @@ export function Footer() {
           <Link className="nav-link hover:text-ink" href="/privacy/">Privacy</Link>
           <Link className="nav-link hover:text-ink" href="/terms/">Terms</Link>
           <Link className="nav-link hover:text-ink" href="/compliance/">Compliance</Link>
+          <a className="nav-link hover:text-ink" href="mailto:privacy@infinionapps.com">Contact</a>
         </div>
       </div>
     </footer>

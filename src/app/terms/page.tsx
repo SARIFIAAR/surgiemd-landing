@@ -4,6 +4,7 @@ import { LegalShell, H2, P, UL, Callout } from "@/components/LegalPage";
 export const metadata: Metadata = {
   title: "SurgiMD — Terms of Use",
   description: "The terms that govern use of the SurgiMD app and services.",
+  alternates: { canonical: "/terms/" },
 };
 
 export default function TermsPage() {

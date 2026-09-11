@@ -33,7 +33,6 @@ export const metadata: Metadata = {
     "patient photo consent app",
     "DHA patient photography Dubai",
   ],
-  alternates: { canonical: "/" },
   openGraph: {
     title: "SurgiMD — Patient photos, perfectly consistent",
     description:
@@ -41,12 +40,14 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "SurgiMD",
     type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "SurgiMD — standardized clinical photography" }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "SurgiMD — Patient photos, perfectly consistent",
     description:
       "Standardized before & after clinical photography for surgeons.",
+    images: ["/og.png"],
   },
   robots: { index: true, follow: true },
 };

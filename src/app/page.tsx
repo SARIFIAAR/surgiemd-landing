@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import SmoothScroll from "@/components/SmoothScroll";
 import { FAQS } from "@/lib/faqs";
 import {
@@ -12,7 +13,12 @@ import {
   Footer,
 } from "@/components/Sections";
 
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
+
 const SITE = "https://sarifiaar.github.io/surgiemd-landing";
+const APP_STORE_URL = "https://apps.apple.com/app/id6757500321";
 
 // Structured data for search + AI engines (Google, ChatGPT, Claude, Perplexity)
 const jsonLd = {
@@ -38,6 +44,8 @@ const jsonLd = {
       },
       audience: { "@type": "Audience", audienceType: "Surgeons and aesthetic clinicians" },
       url: SITE,
+      installUrl: APP_STORE_URL,
+      sameAs: [APP_STORE_URL],
     },
     {
       "@type": "FAQPage",

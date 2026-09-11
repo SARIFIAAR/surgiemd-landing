@@ -5,6 +5,7 @@ import { LegalShell, H2, P, UL, Callout } from "@/components/LegalPage";
 export const metadata: Metadata = {
   title: "SurgiMD — Privacy Policy",
   description: "How SurgiMD collects, stores, protects, and deletes data.",
+  alternates: { canonical: "/privacy/" },
 };
 
 export default function PrivacyPage() {
