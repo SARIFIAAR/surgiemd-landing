@@ -277,6 +277,7 @@ export function Nav() {
           <a className="nav-link hover:text-ink transition-colors" href="#compare">Compare</a>
           <a className="nav-link hover:text-ink transition-colors" href="#security">Security</a>
           <a className="nav-link hover:text-ink transition-colors" href="#pricing">Pricing</a>
+          <a className="nav-link hover:text-ink transition-colors" href="#faq">FAQ</a>
         </nav>
         <a
           href="#cta"
@@ -655,6 +656,42 @@ export function Pricing() {
         <motion.p {...fadeUp} className="mt-8 text-center text-xs text-slate">
           Prices shown are placeholders pending App Store Connect approval.
         </motion.p>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------ FAQ ------------------------------------ */
+
+export function FAQ({ faqs }: { faqs: Array<{ q: string; a: string }> }) {
+  return (
+    <section id="faq" className="relative overflow-hidden py-24">
+      <EyelidMotif />
+      <div className="mx-auto max-w-3xl px-6">
+        <motion.div {...fadeUp} className="text-center">
+          <Eyebrow>Frequently asked questions</Eyebrow>
+          <h2 className="font-display mt-5 text-3xl font-bold tracking-tight md:text-4xl">
+            What surgeons ask before switching
+          </h2>
+        </motion.div>
+        <motion.div {...fadeUp} className="mt-12 space-y-3">
+          {faqs.map((f) => (
+            <details
+              key={f.q}
+              className="card-shadow group rounded-2xl border border-line bg-paper px-6 py-5 open:pb-6"
+            >
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-[17px] font-semibold [&::-webkit-details-marker]:hidden">
+                {f.q}
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-mint text-teal transition-transform group-open:rotate-45">
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M12 5v14M5 12h14" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </summary>
+              <p className="mt-4 leading-relaxed text-slate">{f.a}</p>
+            </details>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

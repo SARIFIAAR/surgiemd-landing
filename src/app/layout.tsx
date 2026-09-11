@@ -18,9 +18,37 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SurgiMD — Every angle. Every visit. Identical.",
+  metadataBase: new URL("https://sarifiaar.github.io/surgiemd-landing"),
+  title: "SurgiMD — Standardized Before & After Photos for Surgeons",
   description:
-    "Standardized before & after photography for oculoplastic surgeons. Capture, align, and compare surgical outcomes with instrument-grade consistency.",
+    "The clinical photography app for surgeons: silhouette capture guides, angle lock, ghost overlays, consent-gated sharing, and encrypted patient records. Designed to support HIPAA, GDPR, and DHA-aligned workflows. Free for up to 15 patients.",
+  keywords: [
+    "before and after photo app for surgeons",
+    "clinical photography app",
+    "medical photography app iPhone",
+    "HIPAA compliant patient photos",
+    "plastic surgery photo app",
+    "standardized patient photography",
+    "oculoplastic surgery photos",
+    "patient photo consent app",
+    "DHA patient photography Dubai",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "SurgiMD — Patient photos, perfectly consistent",
+    description:
+      "Standardized before & after clinical photography for surgeons. Guided capture, encrypted records, consent-gated sharing.",
+    url: "/",
+    siteName: "SurgiMD",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "SurgiMD — Patient photos, perfectly consistent",
+    description:
+      "Standardized before & after clinical photography for surgeons.",
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
