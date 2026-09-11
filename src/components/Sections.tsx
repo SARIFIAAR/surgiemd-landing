@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 /* ---------------------------------- motion ---------------------------------- */
 
-const fadeUp = {
+export const fadeUp = {
   initial: { opacity: 0, y: 28 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-60px" },
@@ -14,9 +14,9 @@ const fadeUp = {
 
 /* ------------------------------- shared pieces ------------------------------- */
 
-const APP_STORE_URL = "https://apps.apple.com/app/id6757500321";
+export const APP_STORE_URL = "https://apps.apple.com/app/id6757500321";
 
-function AppStoreBadge({ large = false }: { large?: boolean }) {
+export function AppStoreBadge({ large = false }: { large?: boolean }) {
   return (
     <a
       href={APP_STORE_URL}
@@ -40,7 +40,7 @@ function AppStoreBadge({ large = false }: { large?: boolean }) {
 }
 
 /* decorative backdrop: drifting aurora blobs + faint dot grid */
-function Backdrop({ dots = false }: { dots?: boolean }) {
+export function Backdrop({ dots = false }: { dots?: boolean }) {
   return (
     <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden>
       {dots && <div className="dot-grid absolute inset-0" />}
@@ -52,7 +52,7 @@ function Backdrop({ dots = false }: { dots?: boolean }) {
 }
 
 /* huge, barely-there eyelid line-art used behind feature rows */
-function EyelidMotif({ flip = false }: { flip?: boolean }) {
+export function EyelidMotif({ flip = false }: { flip?: boolean }) {
   return (
     <svg
       viewBox="0 0 400 240"
@@ -74,7 +74,7 @@ function EyelidMotif({ flip = false }: { flip?: boolean }) {
   );
 }
 
-function Eyebrow({ children }: { children: React.ReactNode }) {
+export function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
     <span className="inline-block rounded-full bg-mint px-3.5 py-1.5 text-xs font-semibold tracking-wide text-teal-deep">
       {children}
@@ -86,7 +86,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 /* Mock screens are placeholders — swap the inner <Screen.../> for an
    <img src="/screens/<name>.png"> once real app screenshots are captured. */
 
-function PhoneFrame({
+export function PhoneFrame({
   children,
   className = "",
 }: {
@@ -134,7 +134,7 @@ function EyelidGuide({ stroke = "#2dd4bf", ghost = false }: { stroke?: string; g
   );
 }
 
-function ScreenCapture() {
+export function ScreenCapture() {
   return (
     <div className="absolute inset-0 flex flex-col bg-[#0b1119] pt-12 text-white">
       <div className="flex items-center justify-between px-5 pb-3">
@@ -172,7 +172,7 @@ function ScreenCapture() {
   );
 }
 
-function ScreenCompare() {
+export function ScreenCompare() {
   return (
     <div className="absolute inset-0 flex flex-col bg-[#0b1119] pt-12 text-white">
       <div className="px-5 pb-3">
@@ -219,7 +219,7 @@ function ScreenCompare() {
   );
 }
 
-function ScreenPatients() {
+export function ScreenPatients() {
   const rows = [
     { name: "R. Haddad", detail: "Blepharoplasty · 4 visits", tag: "Post-op" },
     { name: "M. Chen", detail: "Ptosis repair · 2 visits", tag: "Pre-op" },
@@ -282,6 +282,7 @@ export function Nav() {
           <a className="nav-link hover:text-ink transition-colors" href="#security">Security</a>
           <a className="nav-link hover:text-ink transition-colors" href="#pricing">Pricing</a>
           <a className="nav-link hover:text-ink transition-colors" href="#faq">FAQ</a>
+          <Link className="nav-link text-teal hover:text-teal-deep transition-colors" href="/option2/">Option 2</Link>
         </nav>
         <a
           href={APP_STORE_URL}
