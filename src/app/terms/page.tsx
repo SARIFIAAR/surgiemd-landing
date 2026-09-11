@@ -46,7 +46,7 @@ export default function TermsPage() {
         service. You are responsible for: obtaining and maintaining valid{" "}
         <strong>patient consent</strong> for photography and any sharing;
         complying with the healthcare, privacy and professional rules that
-        apply to you (e.g. GDPR, HIPAA, LGPD, DHA/UAE rules); and the
+        apply to you (e.g. GDPR, HIPAA, DHA/UAE rules); and the
         lawfulness of anything you export, share, print or save out of the
         App.
       </P>

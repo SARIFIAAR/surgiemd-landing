@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -359,7 +360,7 @@ export function Hero() {
 /* -------------------------------- trust strip -------------------------------- */
 
 export function TrustStrip() {
-  const items = ["Designed to support HIPAA", "GDPR & LGPD ready", "DHA / UAE aware", "End-to-end encrypted"];
+  const items = ["Designed to support HIPAA", "GDPR ready", "DHA / UAE aware", "End-to-end encrypted"];
   return (
     <section className="border-y border-line bg-mist py-6">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-10 gap-y-3 px-6">
@@ -506,100 +507,35 @@ const SECURITY_CARDS = [
   },
 ];
 
-/* self-drawn compliance badges — HIPAA/GDPR have no official logos,
-   so these are neutral marks in the style compliance pages use */
-function EUStars({ r = 17 }: { r?: number }) {
-  return (
-    <>
-      {Array.from({ length: 12 }, (_, i) => {
-        const a = (i / 12) * Math.PI * 2 - Math.PI / 2;
-        return (
-          <text
-            key={i}
-            x={32 + Math.cos(a) * r}
-            y={30 + Math.sin(a) * r}
-            textAnchor="middle"
-            dominantBaseline="central"
-            fontSize="6.5"
-            fill="#ffcc00"
-          >
-            ★
-          </text>
-        );
-      })}
-    </>
-  );
-}
-
-const BADGES: Array<{ label: string; sub: string; art: React.ReactNode }> = [
-  {
-    label: "GDPR",
-    sub: "European Union",
-    art: (
-      <svg viewBox="0 0 64 64" className="h-14 w-14">
-        <circle cx="32" cy="32" r="30" fill="#003399" />
-        <EUStars />
-        <text x="32" y="45" textAnchor="middle" fontSize="11" fontWeight="800" fill="#ffffff" fontFamily="var(--font-inter-tight), sans-serif">
-          GDPR
-        </text>
-      </svg>
-    ),
-  },
-  {
-    label: "HIPAA",
-    sub: "United States",
-    art: (
-      <svg viewBox="0 0 64 64" className="h-14 w-14">
-        <path d="M32 3l24 8v20c0 15-10 26-24 30C18 57 8 46 8 31V11l24-8z" fill="#0e7c7b" />
-        <path d="M22 32l7 7 13-13" stroke="#ffffff" strokeWidth="5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-        <text x="32" y="56" textAnchor="middle" fontSize="9" fontWeight="800" fill="#ffffff" fontFamily="var(--font-inter-tight), sans-serif">
-          HIPAA
-        </text>
-      </svg>
-    ),
-  },
-  {
-    label: "LGPD",
-    sub: "Brazil",
-    art: (
-      <svg viewBox="0 0 64 64" className="h-14 w-14">
-        <circle cx="32" cy="32" r="30" fill="#009b3a" />
-        <path d="M32 10L56 32L32 54L8 32Z" fill="#fedf00" />
-        <circle cx="32" cy="32" r="11" fill="#002776" />
-        <text x="32" y="58" textAnchor="middle" fontSize="9" fontWeight="800" fill="#ffffff" fontFamily="var(--font-inter-tight), sans-serif">
-          LGPD
-        </text>
-      </svg>
-    ),
-  },
-  {
-    label: "DHA",
-    sub: "Dubai · UAE",
-    art: (
-      <svg viewBox="0 0 64 64" className="h-14 w-14">
-        <circle cx="32" cy="32" r="30" fill="#0b1c2b" />
-        <path d="M32 12a20 20 0 100 40 16 16 0 110-40z" fill="#d4af37" />
-        <text x="38" y="36" textAnchor="middle" fontSize="10" fontWeight="800" fill="#ffffff" fontFamily="var(--font-inter-tight), sans-serif">
-          DHA
-        </text>
-      </svg>
-    ),
-  },
+const BADGES = [
+  { src: "/badges/gdpr.png", alt: "GDPR — European Union", label: "GDPR", sub: "European Union" },
+  { src: "/badges/hipaa.jpg", alt: "HIPAA — United States", label: "HIPAA", sub: "United States" },
+  { src: "/badges/dha.jpg", alt: "Dubai Health Authority", label: "DHA", sub: "Dubai · UAE" },
 ];
 
 function ComplianceBadges() {
   return (
-    <div className="mt-12 flex flex-wrap items-start justify-center gap-x-12 gap-y-6">
+    <div className="mt-12 flex flex-wrap items-stretch justify-center gap-6">
       {BADGES.map((b, i) => (
         <motion.div
           key={b.label}
           {...fadeUp}
           transition={{ ...fadeUp.transition, delay: i * 0.08 }}
-          className="flex flex-col items-center gap-2"
+          className="card-shadow flex w-40 flex-col items-center justify-between gap-3 rounded-2xl border border-line bg-white p-5"
         >
-          {b.art}
-          <span className="text-xs font-semibold text-ink">{b.label}</span>
-          <span className="-mt-1.5 text-[10px] text-slate">{b.sub}</span>
+          <div className="flex h-20 items-center">
+            <Image
+              src={b.src}
+              alt={b.alt}
+              width={140}
+              height={90}
+              className="max-h-20 w-auto object-contain"
+            />
+          </div>
+          <div className="text-center leading-tight">
+            <span className="block text-xs font-semibold text-ink">{b.label}</span>
+            <span className="block text-[10px] text-slate">{b.sub}</span>
+          </div>
         </motion.div>
       ))}
     </div>
@@ -636,7 +572,7 @@ export function Security() {
         </div>
         <ComplianceBadges />
         <motion.p {...fadeUp} className="mx-auto mt-10 max-w-2xl text-center text-slate">
-          Designed to support GDPR, HIPAA, LGPD and DHA-aligned workflows —
+          Designed to support GDPR, HIPAA and DHA-aligned workflows —
           with processor agreements available for clinics, and full offline
           mode for practices with strict data-residency requirements.{" "}
           <Link href="/compliance/" className="font-semibold text-teal hover:text-teal-deep whitespace-nowrap">

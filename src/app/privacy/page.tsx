@@ -94,7 +94,7 @@ export default function PrivacyPage() {
         <Link className="text-teal underline" href="/compliance/">
           Security &amp; Compliance
         </Link>{" "}
-        for how these map to GDPR, HIPAA, LGPD and UAE health data law.
+        for how these map to GDPR, HIPAA and UAE health data law.
       </P>
 
       <H2>5. Sharing</H2>
@@ -122,12 +122,12 @@ export default function PrivacyPage() {
 
       <H2>7. Your rights</H2>
       <P>
-        Depending on your jurisdiction (GDPR, LGPD, UAE data protection
+        Depending on your jurisdiction (GDPR, UAE data protection
         law), you may have rights of access, correction, deletion,
         portability and objection. For clinician-account data, contact us
         directly. For patient data, contact your treating clinic (the
         controller) — we support clinics in fulfilling such requests.
-        EU/UK/Brazil-specific processor terms (DPA, SCCs) are available to
+        EU/UK-specific processor terms (DPA, SCCs) are available to
         clinics on request.
       </P>
 

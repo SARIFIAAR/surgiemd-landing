@@ -4,7 +4,7 @@ import { LegalShell, H2, P, UL, Callout } from "@/components/LegalPage";
 export const metadata: Metadata = {
   title: "SurgiMD — Security & Compliance",
   description:
-    "How SurgiMD's technical and organisational measures map to GDPR, HIPAA, LGPD, and UAE health data law.",
+    "How SurgiMD's technical and organisational measures map to GDPR, HIPAA, and UAE health data law.",
 };
 
 export default function CompliancePage() {
@@ -65,15 +65,6 @@ export default function CompliancePage() {
         there is no such thing as HIPAA certification, and any vendor claiming
         one is telling you something about their marketing, not their
         engineering.
-      </P>
-
-      <H2>LGPD (Brazil)</H2>
-      <P>
-        The same architecture serves LGPD&apos;s requirements for sensitive
-        personal data (Art. 11): explicit, documented consent; purpose
-        limitation; security and prevention measures; and support for
-        data-subject rights (access, deletion, portability).
-        Clinic-as-controller / SurgiMD-as-operator agreements are available.
       </P>
 
       <H2>Dubai Health Authority &amp; UAE health data law</H2>
