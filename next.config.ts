@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   basePath: onPages ? "/surgiemd-landing" : undefined,
   images: { unoptimized: true },
+  // next/image skips basePath when unoptimized — expose it for manual prefixing
+  env: { NEXT_PUBLIC_BASE_PATH: onPages ? "/surgiemd-landing" : "" },
 };
 
 export default nextConfig;

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -524,8 +523,10 @@ function ComplianceBadges() {
           className="card-shadow flex w-40 flex-col items-center justify-between gap-3 rounded-2xl border border-line bg-white p-5"
         >
           <div className="flex h-20 items-center">
-            <Image
-              src={b.src}
+            {/* plain img: next/image drops basePath when unoptimized */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${b.src}`}
               alt={b.alt}
               width={140}
               height={90}
