@@ -17,24 +17,22 @@ export const fadeUp = {
 export const APP_STORE_URL = "https://apps.apple.com/app/id6757500321";
 
 export function AppStoreBadge({ large = false }: { large?: boolean }) {
+  // official Apple "Download on the App Store" badge artwork
   return (
     <a
       href={APP_STORE_URL}
       target="_blank"
       rel="noopener"
-      className={`inline-flex items-center gap-3 rounded-xl bg-ink text-white transition-all hover:bg-teal-deep hover:-translate-y-0.5 ${
-        large ? "px-7 py-4" : "px-5 py-3"
-      }`}
+      className="inline-block transition-all hover:-translate-y-0.5 hover:opacity-90"
     >
-      <svg viewBox="0 0 24 24" className={large ? "h-8 w-8" : "h-6 w-6"} fill="currentColor" aria-hidden>
-        <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8.79-.16 2.19-.91 3.7-.78 1.55.13 2.72.74 3.48 1.85-3.2 1.98-2.44 6.28.49 7.55-.6 1.52-1.37 3.03-2.75 3.55ZM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25Z" />
-      </svg>
-      <span className="text-left leading-tight">
-        <span className={`block ${large ? "text-[11px]" : "text-[10px]"} opacity-75`}>
-          Download on the
-        </span>
-        <span className={`block font-semibold ${large ? "text-lg" : "text-sm"}`}>App Store</span>
-      </span>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/badges/app-store.svg`}
+        alt="Download on the App Store"
+        className={large ? "h-16 w-auto" : "h-12 w-auto"}
+        width={540}
+        height={160}
+      />
     </a>
   );
 }
