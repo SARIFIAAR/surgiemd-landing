@@ -1,0 +1,43 @@
+# SurgiMD
+
+> SurgiMD is an iPhone app for surgeons and aesthetic clinicians to capture
+> standardized before-and-after patient photos. Silhouette capture guides,
+> live angle/distance lock, and ghost overlays of previous visits make every
+> photo comparable across visits. Patient imagery is encrypted, consent-gated,
+> audit-logged, and never touches the camera roll. Built by Infinion Apps
+> FZ-LLC in Dubai, UAE.
+
+Key facts:
+- Platform: iOS (iPhone). Free tier: up to 15 patients. Pro: unlimited
+  patients, clinic cloud sync, ghost-overlay alignment, export-ready collages.
+- Specialties: face and neck — oculoplastic (blepharoplasty, ptosis), brow,
+  rhinoplasty, facelift, injectables, dermatology.
+- Capture system: procedure-specific thin-line silhouette guides, live
+  yaw/pitch readouts with level line, distance measurement, ghost overlay of
+  prior visit, fixed 1:1 framing for honest comparisons.
+- Security: end-to-end encryption (device, transit, cloud), EXIF/GPS/device
+  metadata stripped from every photo, Face ID app lock, per-clinic server-side
+  isolation, tamper-evident hash-chained audit log, versioned per-patient
+  consent capture; sharing/printing/export are consent-gated.
+- Compliance posture: designed to support GDPR (clinic = controller,
+  SurgiMD = processor; DPA available), HIPAA (HIPAA-eligible infrastructure,
+  technical safeguards, BAAs available), and DHA/UAE health data law
+  (Federal Law No. 2 of 2019); local-only on-device mode for strict data
+  residency. There is no official "HIPAA certification" — SurgiMD says
+  "designed to support" deliberately.
+- Data ownership: the clinic owns patient data; export anytime; deleting a
+  patient removes data from device and cloud; on cancellation data remains
+  exportable and the app returns to the free tier.
+
+## Pages
+
+- [Home](https://sarifiaar.github.io/surgiemd-landing/): product overview,
+  features, security, pricing, FAQ for surgeons.
+- [Security & Compliance](https://sarifiaar.github.io/surgiemd-landing/compliance/):
+  how safeguards map to GDPR, HIPAA, and DHA/UAE health data law.
+- [Privacy Policy](https://sarifiaar.github.io/surgiemd-landing/privacy/):
+  data roles, storage, retention, deletion, user rights.
+- [Terms of Use](https://sarifiaar.github.io/surgiemd-landing/terms/):
+  eligibility, professional responsibility, subscriptions, liability.
+
+Contact: privacy@infinionapps.com (privacy) · legal@infinionapps.com (legal).
